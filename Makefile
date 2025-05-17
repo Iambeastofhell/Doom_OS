@@ -1,19 +1,25 @@
-CC=gcc
-LD=ld
-AS=nasm
+CC = gcc
+LD = ld
+AS = nasm
 
-CFLAGS=-m32 -ffreestanding -fno-pie -fno-stack-protector -nostdlib
-LDFLAGS=-m elf_i386 -T linker.ld
+CFLAGS = -m32 -ffreestanding -fno-pie -fno-stack-protector -nostdlib -Iinclude
+LDFLAGS = -m elf_i386 -T linker.ld
 
-OBJS=boot/bootloader.o kernel/main.o
+C_SOURCES := $(wildcard kernel/*.c lib/*.c)
+ASM_SOURCES := $(wildcard boot/*.asm)
+
+C_OBJS := $(C_SOURCES:.c=.o)
+ASM_OBJS := $(ASM_SOURCES:.asm=.o)
+
+OBJS = $(ASM_OBJS) $(C_OBJS)
 
 all: kernel.bin
 
-boot/bootloader.o: boot/bootloader.asm
-	$(AS) -f elf32 $< -o $@
-
-kernel/main.o: kernel/main.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.asm
+	$(AS) -f elf32 $< -o $@
 
 kernel.bin: $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
@@ -23,4 +29,3 @@ run: kernel.bin
 
 clean:
 	rm -f $(OBJS) kernel.bin
-
