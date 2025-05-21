@@ -6,7 +6,7 @@ CFLAGS = -m32 -ffreestanding -fno-pie -fno-stack-protector -nostdlib -Iinclude
 LDFLAGS = -m elf_i386 -T linker.ld
 
 C_SOURCES := $(wildcard kernel/*.c lib/*.c)
-ASM_SOURCES := $(wildcard boot/*.asm)
+ASM_SOURCES := $(wildcard boot/*.asm kernel/*.asm)
 
 C_OBJS := $(C_SOURCES:.c=.o)
 ASM_OBJS := $(ASM_SOURCES:.asm=.o)
