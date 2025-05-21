@@ -10,6 +10,8 @@ void vgainit(){
         vidptr[j+1]=0x07;
         j=j+2;
     }
+    cursor_x=0;
+    cursor_y=0;
 }
 
 void scrollup(){
@@ -24,24 +26,46 @@ void scrollup(){
     cursor_y--;
 }
 
+char putchar(const char c){
+    if(c=='\n'){
+        cursor_x=0;
+        cursor_y++;
+    }else{
+        int index = (cursor_y*80 +cursor_x)*2;
+        vidptr[index] = c;
+        vidptr[index+1]=0x04;
+        cursor_x++;
+    }
+    if(cursor_x>=80){
+        cursor_x=0;
+        cursor_y++;
+    }
+    if (cursor_y>=25){
+        scrollup();
+    }
+    return c;
+}
+
+void backspace(){
+    if(cursor_x==0){
+        if(cursor_y!=0){
+            cursor_y--;
+            cursor_x=79;
+            int index = (cursor_y*80 +cursor_x)*2;
+            vidptr[index] = ' ';
+            vidptr[index+1] = 0x04;
+        }
+    }else{
+        cursor_x--;;
+        int index = (cursor_y*80 +cursor_x)*2;
+        vidptr[index] = ' ';
+        vidptr[index+1] = 0x04;
+    }
+}
+
 void printf(const char* str){
     while (*str){
-        if(*str=='\n'){
-            cursor_x=0;
-            cursor_y++;
-        }else{
-            int index = (cursor_y*80 +cursor_x)*2;
-            vidptr[index] = *str;
-            vidptr[index+1]=0x04;
-            cursor_x++;
-        }
-        if(cursor_x>=80){
-            cursor_x=0;
-            cursor_y++;
-        }
-        if (cursor_y>=25){
-            scrollup();
-        }
+        putchar(*str);
         str++;
     }
 }

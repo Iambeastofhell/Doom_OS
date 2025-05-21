@@ -1,7 +1,7 @@
 #define IDT_SIZE 256
 #include "standio.h"
 #include "keyboard_map.h"
-
+#include "shell.h"
 
 #define KEYBOARD_DATA_PORT 0x60
 #define KEYBOARD_STATUS_PORT 0x64
@@ -17,8 +17,8 @@ extern char read_port(unsigned short port);
 extern void write_port(unsigned short port, unsigned char data);
 extern void load_idt(unsigned long *idt_ptr);
 
-
-
+char input_buffer[256];
+int buffer_index=0;
 // IDT entry structure
 struct IDT_entry {
     unsigned short offset_lowerbits;
@@ -110,11 +110,19 @@ void keyboard_handler_main(void)
 
 		if(keycode == ENTER_KEY_CODE) {
             printf("\n");
+            input_buffer[buffer_index]='\0';
+            process_command(input_buffer);
+            for (int i = 0; i < buffer_index; i++){
+                input_buffer[buffer_index]=' ';
+            }
+            buffer_index=0;
 			return;
 		}
-        char str[2];
-        str[0]=keyboard_map[(unsigned char) keycode];
-        str[1]='\0';
-        printf(str);
+		if(keycode == 0x0E) {   //14 which would correspond to backspace
+            backspace();
+            input_buffer[--buffer_index]=' ';
+			return;
+		}
+        input_buffer[buffer_index++] = putchar(keyboard_map[(unsigned char) keycode]);
 	}
 }
