@@ -1,0 +1,32 @@
+name: Kernel Build CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make nasm binutils qemu
+
+      - name: Build kernel
+        run: make
+
+      - name: Run kernel in QEMU (optional smoke test)
+        run: |
+          qemu-system-i386 -kernel kernel.bin -nographic -serial mon:stdio -d guest_errors -no-reboot -no-shutdown &
+          sleep 10
+        continue-on-error: true
+
+      - name: Clean up
+        run: make clean
