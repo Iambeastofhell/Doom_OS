@@ -1,3 +1,8 @@
+Build test:
+
+![C/C++ Workflow Status](https://github.com/Iambeastofhell/Doom_OS/actions/workflows/c-cpp.yml/badge.svg)
+
+
 The goal of DoomOS is to build a simple, custom operating system for x86 (32-bit) architecture, with the eventual capability to run the classic DOOM game.
 
 Requirements:
@@ -9,7 +14,7 @@ Make sure you have the following tools installed:
 
 Install them using:
 ```bash
-sudo apt install nasm gcc qemu build-essential
+sudo apt install nasm gcc qemu-system build-essential
 ```
 
 To run:

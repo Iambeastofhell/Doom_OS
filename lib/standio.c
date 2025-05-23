@@ -69,3 +69,42 @@ void printf(const char* str){
         str++;
     }
 }
+
+
+
+// Convert an integer to a string (char*) without using standard libraries
+char* int_to_str(int n) {
+    static char str[12]; // Enough to hold -2147483648 + null terminator
+    int i = 10;           // Start from end of buffer (excluding null terminator)
+    int is_negative = 0;
+    
+    str[11] = '\0';       // Null-terminate the string
+
+    if (n == 0) {
+        str[i] = '0';
+        return &str[i];
+    }
+
+    if (n < 0) {
+        is_negative = 1;
+    }
+
+    // Handle each digit
+    while (n != 0) {
+        int digit = n % 10;
+        if (digit < 0) digit = -digit;
+        str[i--] = '0' + digit;
+        n /= 10;
+    }
+
+    if (is_negative) {
+        str[i--] = '-';
+    }
+
+    return &str[i + 1];
+}
+
+
+void print_int(int n) {
+    printf(int_to_str(n));
+}
