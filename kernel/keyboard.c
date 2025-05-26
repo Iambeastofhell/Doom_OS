@@ -113,7 +113,7 @@ void keyboard_handler_main(void)
 			return;
 
 		if(keycode == ENTER_KEY_CODE) {
-            printf("\n");
+            vga_printf("\n");
             input_buffer[buffer_index]='\0';
             process_command(input_buffer);
             for (int i = 0; i < buffer_index; i++){

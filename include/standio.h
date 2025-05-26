@@ -1,7 +1,8 @@
 #ifndef STANDIO_H
 #define STANDIO_H
 
-void printf(const char* str);
+void vga_printf(const char* str);
+void printf(int fd, char *buf);
 void vgainit();
 void backspace();
 char putchar(const char c);

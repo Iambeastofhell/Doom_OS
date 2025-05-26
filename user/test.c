@@ -1,5 +1,6 @@
 #include "usersys.h"
+#include "syscall.h"
 
 void main(){
-    syscall(0, 0);
+    syscall(SYS_test, 0, 0, 0 ,0 ,0);
 }

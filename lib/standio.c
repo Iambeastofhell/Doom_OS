@@ -63,7 +63,7 @@ void backspace(){
     }
 }
 
-void printf(const char* str){
+void vga_printf(const char* str){
     while (*str){
         putchar(*str);
         str++;
@@ -106,5 +106,5 @@ char* int_to_str(int n) {
 
 
 void print_int(int n) {
-    printf(int_to_str(n));
+    vga_printf(int_to_str(n));
 }

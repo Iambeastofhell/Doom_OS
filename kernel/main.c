@@ -5,7 +5,7 @@ void kmain(void) {
     vgainit();
     idt_init();
     kb_init();
-    printf("Kernel has started.\nWelcome to DOOM OS\n");
+    vga_printf("Kernel has started.\nWelcome to DOOM OS\n");
     while (1);    
     return;
 }
