@@ -7,5 +7,6 @@ void vgainit();
 void backspace();
 char putchar(const char c);
 void print_int(int n);
+void *memcpy(void *dest, void *src, int n);
 
 #endif

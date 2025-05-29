@@ -108,3 +108,12 @@ char* int_to_str(int n) {
 void print_int(int n) {
     vga_printf(int_to_str(n));
 }
+
+void *memcpy(void *dest, void *src, int n){
+    char *d = (char *)dest;
+    char *s = (char *)src;
+    for (int i = 0; i < n; i++){
+        d[i] = s[i];
+    }
+    return dest;
+}

@@ -24,3 +24,12 @@ int strncmp(const char *str1, const char *str2, int n){
     }
     return 0;
 }
+
+void strcpy(char *dest, const char *src) {
+    int i = 0;
+    while (src[i] && i < 15) {  // Limit to 15 chars to leave room for null
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';  // Ensure null termination
+}
