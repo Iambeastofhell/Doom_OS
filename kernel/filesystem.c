@@ -94,8 +94,6 @@ int fs_write(char *name, char *buf, int len){
 int fs_read(char *name, char *buffer) {
     struct inode *in = (struct inode*)ITABLE_ADD;
     char *blocks = (char *)BLOCK_ADD;
-    print_int(strcmp(in[1].name, name));
-    vga_printf("\n");
     for (int i = 0; i < INODE_NUM; i++) {
         if (in[i].used && strcmp(in[i].name, name) == 0) {
             int total = in[i].size;
@@ -110,4 +108,16 @@ int fs_read(char *name, char *buffer) {
         }
     }
     return -1;  
+}
+
+char **fs_list(){
+    int j=0;
+    static char *ans[64];
+    struct inode *in = (struct inode *)ITABLE_ADD;
+    for (int i = 0; i < INODE_NUM; i++){
+        if (in[i].used){
+             ans[j++] = in[i].name;
+        }
+    }
+    return ans;
 }

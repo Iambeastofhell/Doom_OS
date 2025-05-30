@@ -25,7 +25,7 @@ kernel.bin: $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
 
 run: kernel.bin
-	qemu-system-i386 -kernel kernel.bin -m 512M
+	qemu-system-i386 -kernel kernel.bin 
 
 clean:
 	rm -f $(OBJS) kernel.bin

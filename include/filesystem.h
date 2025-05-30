@@ -32,5 +32,6 @@ void fs_init();
 int new_block();
 int fs_read(char *name, char *buffer);
 int fs_write(char *name, char *buf, int len);
+char **fs_list();
 
 #endif

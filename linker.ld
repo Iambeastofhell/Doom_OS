@@ -7,10 +7,10 @@ SECTIONS {
   .text : { *(.text) }
   .data : { *(.data) }
   .bss  : { *(.bss)  }
-  .fs : {
+  /* .fs : {
     . = ALIGN(0x1000);
     KEEP(*(.fs))
     . = . + 64K; /* Reserve 64KB for FS */
-}
+/*} */
 }
 
